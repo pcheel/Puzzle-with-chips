@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Map", menuName = "Data/Level", order = 51)]
+[CreateAssetMenu(fileName = "Map", menuName = "Data/Map", order = 51)]
 public class MapSO : ScriptableObject
 {
     public Vector2 _mapSize;
