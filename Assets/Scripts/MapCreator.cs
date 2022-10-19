@@ -10,11 +10,16 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private Transform _mapParent;
 
     private Dictionary<Vector2, Block> _map;
+    private List<Block> _blocks;
     private List<Blocks> _colorBlocks;
     private BlockFactory _blockFactory;
 
+    public Dictionary<Vector2, Block> map { get { return _map; } set { _map = value; } }
+    public List<Block> blocks => _blocks;
+
     private void Awake()
     {
+        _blocks = new List<Block>();
         _map = new Dictionary<Vector2, Block>();
         _colorBlocks = ColorsBlocksListCreator();
         _blockFactory = GetComponent<BlockFactory>();
@@ -44,6 +49,7 @@ public class MapCreator : MonoBehaviour
                 block.gameObject.transform.position = new Vector3(blockPosition.x, 0f, blockPosition.y);
                 block.transform.SetParent(_mapParent);
                 _map.Add(blockPosition, block);
+                _blocks.Add(block);
             }
         }
     }

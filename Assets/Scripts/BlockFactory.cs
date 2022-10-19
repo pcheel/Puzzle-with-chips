@@ -4,39 +4,53 @@ using UnityEngine;
 
 public class BlockFactory : MonoBehaviour
 {
-    //[SerializeField] private Dictionary<Blocks, GameObject> _blockVariants;
     [SerializeField] private BlockPackSO _blockPackSO;
+    [SerializeField] private ChoiceHandler _choiceHandler;
+
+    private List<Blocks> _colorBlockTypes;
 
     private void Awake()
     {
-        //_blockPack = _blockPackSO._blockPack;
-
+        _colorBlockTypes = new List<Blocks>() { Blocks.Red, Blocks.Green, Blocks.Blue };
     }
-
     public Block CreateBlock(Blocks blockType)
     {
-        GameObject block;
+        GameObject blockGO;
         switch (blockType)
         {
             case Blocks.Red:
-                block = Instantiate(_blockPackSO._redBlock);
+                blockGO = Instantiate(_blockPackSO._redBlock);
+                //blockGO.GetComponent<B>
                 break;
             case Blocks.Blue:
-                block = Instantiate(_blockPackSO._blueBlock);
+                blockGO = Instantiate(_blockPackSO._blueBlock);
                 break;
             case Blocks.Green:
-                block = Instantiate(_blockPackSO._greenBlock);
+                blockGO = Instantiate(_blockPackSO._greenBlock);
                 break;
             case Blocks.Free:
-                block = Instantiate(_blockPackSO._freeBlock);
+                blockGO = Instantiate(_blockPackSO._freeBlock);
                 break;
             case Blocks.Stationary:
-                block = Instantiate(_blockPackSO._stationaryBlock);
+                blockGO = Instantiate(_blockPackSO._stationaryBlock);
                 break;
             default:
-                block = null;
+                blockGO = null;
                 break;
         }
-        return block.GetComponent<Block>();
+        Block block = blockGO.GetComponent<Block>();
+        block.choiceHandler = _choiceHandler;
+        block.blockType = blockType;
+        if (_colorBlockTypes.Contains(blockType))
+        {
+            block.blockState = new CanBeChoicedBlockState();
+            //Debug.Log($"name = {block.gameObject.name}, type = {blockType}");
+        }
+        else
+        {
+            block.blockState = new CantBeChoicedBlockState();
+            //Debug.Log($"name = {block.gameObject.name}, type = {blockType}");
+        }
+        return block;
     }
 }
