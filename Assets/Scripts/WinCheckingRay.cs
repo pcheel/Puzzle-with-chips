@@ -19,11 +19,11 @@ public class WinCheckingRay : MonoBehaviour
         {
             if (hit.collider.GetComponent<Block>().blockType == blockType)
             {
-                Debug.Log("blockType");
+                //Debug.Log("blockType");
                 correctBlockCounter++;
             }
         }
-        Debug.Log($"CheckWinRays/name: {gameObject.name}/ correctHits: {correctBlockCounter}");
+        //Debug.Log($"CheckWinRays/name: {gameObject.name}/ correctHits: {correctBlockCounter}");
         return correctBlockCounter == CORRECT_BLOCK_MAX ? 1 : 0;
     }
 

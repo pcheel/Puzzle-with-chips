@@ -17,7 +17,6 @@ public class WinChecker : MonoBehaviour
 
     public void CheckWin()
     {
-        //Debug.Log("CheckWin");
         int counter = 0;
         foreach (WinCheckingRay winCheckingRay in _blockFactory.winCheckingRays)
         {
@@ -32,6 +31,5 @@ public class WinChecker : MonoBehaviour
     private void Win()
     {
         _winPanel.SetActive(true);
-        //Debug.Log("win");
     }
 }

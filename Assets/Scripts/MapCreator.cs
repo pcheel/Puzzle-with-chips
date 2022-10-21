@@ -9,20 +9,20 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private MapSO _levelData;
     [SerializeField] private Transform _mapParent;
 
-    private Dictionary<Vector2, Block> _map;
+    private Dictionary<Vector3, Block> _map;
     private List<Block> _blocks;
     private List<WinCheckingRay> _winCheckingBlocks;
     private List<Blocks> _colorBlocks;
     private BlockFactory _blockFactory;
 
-    public Dictionary<Vector2, Block> map { get { return _map; } set { _map = value; } }
+    public Dictionary<Vector3, Block> map { get { return _map; } set { _map = value; } }
     public List<Block> blocks => _blocks;
 
     private void Awake()
     {
         _blocks = new List<Block>();
         _winCheckingBlocks = new List<WinCheckingRay>();
-        _map = new Dictionary<Vector2, Block>();
+        _map = new Dictionary<Vector3, Block>();
         _colorBlocks = ColorsBlocksListCreator();
         _blockFactory = GetComponent<BlockFactory>();
     }
@@ -32,7 +32,6 @@ public class MapCreator : MonoBehaviour
     }
     private void CreateMap()
     {
-        //GameObject winCheckBlock = Instantiate(_)
         _winCheckingBlocks = _blockFactory.CreateWinCheckingBlock();
         for (int i = 0; i < _levelData._checkingWinBlocksPositions.Count; i++)
         {
@@ -44,7 +43,7 @@ public class MapCreator : MonoBehaviour
             for (int j = 1; j <= _levelData._mapSize.y; j++)
             {
                 Block block;
-                Vector2 blockPosition = new Vector2(i, j);
+                Vector3 blockPosition = new Vector3(i, 0f, j);
                 if (_levelData._stationaryBlocksPositions.Contains(blockPosition))
                     block = _blockFactory.CreateBlock(Blocks.Stationary);
                 else if (_levelData._freeBlocksPositions.Contains(blockPosition))
@@ -55,7 +54,7 @@ public class MapCreator : MonoBehaviour
                     block = _blockFactory.CreateBlock(_colorBlocks[blockNumber]);
                     _colorBlocks.Remove(_colorBlocks[blockNumber]);
                 }
-                block.gameObject.transform.position = new Vector3(blockPosition.x, 0f, blockPosition.y);
+                block.gameObject.transform.position = blockPosition;
                 block.transform.SetParent(_mapParent);
                 _map.Add(blockPosition, block);
                 _blocks.Add(block);
