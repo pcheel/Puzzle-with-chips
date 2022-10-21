@@ -11,6 +11,7 @@ public class MapCreator : MonoBehaviour
 
     private Dictionary<Vector2, Block> _map;
     private List<Block> _blocks;
+    private List<WinCheckingRay> _winCheckingBlocks;
     private List<Blocks> _colorBlocks;
     private BlockFactory _blockFactory;
 
@@ -20,6 +21,7 @@ public class MapCreator : MonoBehaviour
     private void Awake()
     {
         _blocks = new List<Block>();
+        _winCheckingBlocks = new List<WinCheckingRay>();
         _map = new Dictionary<Vector2, Block>();
         _colorBlocks = ColorsBlocksListCreator();
         _blockFactory = GetComponent<BlockFactory>();
@@ -30,6 +32,13 @@ public class MapCreator : MonoBehaviour
     }
     private void CreateMap()
     {
+        //GameObject winCheckBlock = Instantiate(_)
+        _winCheckingBlocks = _blockFactory.CreateWinCheckingBlock();
+        for (int i = 0; i < _levelData._checkingWinBlocksPositions.Count; i++)
+        {
+            _winCheckingBlocks[i].transform.position = _levelData._checkingWinBlocksPositions[i];
+        }
+
         for (int i = 1; i <= _levelData._mapSize.x; i++)
         {
             for (int j = 1; j <= _levelData._mapSize.y; j++)

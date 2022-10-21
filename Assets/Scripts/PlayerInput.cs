@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class PlayerInput : MonoBehaviour
 {
+    //[SerializeField] private WinChecker _checker;
     private Camera _camera;
     private Ray _ray;
     private void Awake()
@@ -24,6 +25,8 @@ public class PlayerInput : MonoBehaviour
                 if (block != null)
                 {
                     block.OnClicked?.Invoke(block);
+                    //_checker.CheckWin();
+                    //Debug.Log("2");
                 }
             }
         }

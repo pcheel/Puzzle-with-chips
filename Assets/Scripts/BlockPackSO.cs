@@ -11,4 +11,7 @@ public class BlockPackSO : ScriptableObject
     public GameObject _greenBlock;
     public GameObject _freeBlock;
     public GameObject _stationaryBlock;
+    public GameObject _blueRayBlock;
+    public GameObject _greenRayBlock;
+    public GameObject _redRayBlock;
 }

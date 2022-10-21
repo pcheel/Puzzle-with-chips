@@ -17,3 +17,6 @@ MonoBehaviour:
   _greenBlock: {fileID: 6086947366711313809, guid: 58dedd0fe38b26b48b37aa78ded300dd, type: 3}
   _freeBlock: {fileID: 1121511346931005942, guid: bb0b32fae507b734c8b4bbc10cfc5a18, type: 3}
   _stationaryBlock: {fileID: 6806108328945444161, guid: 4d552de2ff91eed4281a2383bc6a09b5, type: 3}
+  _blueRayBlock: {fileID: 3696422148527836403, guid: 8f26b931aa6cb4d42bab0c012aaed8b6, type: 3}
+  _greenRayBlock: {fileID: 4839016945257323955, guid: 834f682593f927145bc9e8b02fbec013, type: 3}
+  _redRayBlock: {fileID: 8356709319073017229, guid: de282881c4b4b9a45bcb066d30ab4694, type: 3}

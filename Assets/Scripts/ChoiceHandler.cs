@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,13 @@ using UnityEngine;
 public class ChoiceHandler : MonoBehaviour
 {
     public MapCreator _mapCreator;
+    public Action _OnBlocksSwap;
 
     private List<Block> _choiñedBlocks;
     private List<Blocks> _colorBlockTypes;
     private List<Block> _changedBlocks;
     private List<Vector2> _additionPositions;
+    private List<WinCheckingRay> _winChickingRays;
 
     private void Awake()
     {
@@ -29,11 +32,13 @@ public class ChoiceHandler : MonoBehaviour
         Vector3 firstPos = _choiñedBlocks[0].transform.position;
         Vector3 secondePos = _choiñedBlocks[1].transform.position;
         Block block = _choiñedBlocks[0];
-        //Vector3 firstPos = _choiñedBlocks[1].transform.position;
         _choiñedBlocks[0].transform.position = secondePos;
         _mapCreator.map[new Vector2(firstPos.x, firstPos.z)] = _choiñedBlocks[1];
         _choiñedBlocks[1].transform.position = firstPos;
         _mapCreator.map[new Vector2(secondePos.x, secondePos.z)] = block;
+
+        //_OnBlocksSwap?.Invoke();
+        StartCoroutine(CheckWinCoroutine());
     }
     public IBlockState CheckBlockList(Block block)
     {
@@ -45,6 +50,7 @@ public class ChoiceHandler : MonoBehaviour
         else if (_choiñedBlocks.Count == 2)
         {
             SwapPosition();
+            //_OnBlocksSwap?.Invoke();
             return ReturnBlocksToDefaultState(block);
             //
         }
@@ -63,12 +69,8 @@ public class ChoiceHandler : MonoBehaviour
             {
                 changedBlock.blockState = new CantBeChoicedBlockState();
             }
-            //Debug.Log($"type = {changedBlock.blockType}, pos = {changedBlock.transform.position}");
         }
-        foreach(var paar in _mapCreator.map)
-        {
-            Debug.Log($"type = {paar.Value.blockType}, pos = {paar.Key}");
-        }
+        //_OnBlocksSwap?.Invoke();
         if (_colorBlockTypes.Contains(block.blockType))
         {
             state = new CanBeChoicedBlockState();
@@ -96,13 +98,16 @@ public class ChoiceHandler : MonoBehaviour
             if (_mapCreator.map.ContainsKey(adjacentPosition))
             {
                 Blocks blockType = _mapCreator.map[adjacentPosition].blockType;
-                //Debug.Log(blockType);
                 if (blockType == Blocks.Free)
                 {
-                    Debug.Log("is free");
                     _mapCreator.map[adjacentPosition].blockState = new CanBeChoicedBlockState();
                 }
             }
         }
+    }
+    private IEnumerator CheckWinCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _OnBlocksSwap?.Invoke();
     }
 }

@@ -8,10 +8,14 @@ public class BlockFactory : MonoBehaviour
     [SerializeField] private ChoiceHandler _choiceHandler;
 
     private List<Blocks> _colorBlockTypes;
+    private List<WinCheckingRay> _winCheckingRays;
+
+    public List<WinCheckingRay> winCheckingRays => _winCheckingRays;
 
     private void Awake()
     {
         _colorBlockTypes = new List<Blocks>() { Blocks.Red, Blocks.Green, Blocks.Blue };
+        _winCheckingRays = new List<WinCheckingRay>();
     }
     public Block CreateBlock(Blocks blockType)
     {
@@ -44,13 +48,29 @@ public class BlockFactory : MonoBehaviour
         if (_colorBlockTypes.Contains(blockType))
         {
             block.blockState = new CanBeChoicedBlockState();
-            //Debug.Log($"name = {block.gameObject.name}, type = {blockType}");
         }
         else
         {
             block.blockState = new CantBeChoicedBlockState();
-            //Debug.Log($"name = {block.gameObject.name}, type = {blockType}");
         }
         return block;
+    }
+
+    public List<WinCheckingRay> CreateWinCheckingBlock()
+    {
+        _winCheckingRays = new List<WinCheckingRay>();
+        GameObject redRayGO = Instantiate(_blockPackSO._redRayBlock);
+        GameObject greenRayGO = Instantiate(_blockPackSO._greenRayBlock);
+        GameObject blueRayGO = Instantiate(_blockPackSO._blueRayBlock);
+        WinCheckingRay redRay = redRayGO.GetComponent<WinCheckingRay>();
+        WinCheckingRay greenRay = greenRayGO.GetComponent<WinCheckingRay>();
+        WinCheckingRay blueRay = blueRayGO.GetComponent<WinCheckingRay>();
+        redRay.blockType = Blocks.Red;
+        greenRay.blockType = Blocks.Green;
+        blueRay.blockType = Blocks.Blue;
+        _winCheckingRays.Add(redRay);
+        _winCheckingRays.Add(greenRay);
+        _winCheckingRays.Add(blueRay);
+        return _winCheckingRays;
     }
 }
