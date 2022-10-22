@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,10 +6,10 @@ public class BlockFactory : MonoBehaviour
     [SerializeField] private BlockPackSO _blockPackSO;
     [SerializeField] private ChoiceHandler _choiceHandler;
 
+    public List<WinCheckingRay> winCheckingRays => _winCheckingRays;
+
     private List<Blocks> _colorBlockTypes;
     private List<WinCheckingRay> _winCheckingRays;
-
-    public List<WinCheckingRay> winCheckingRays => _winCheckingRays;
 
     private void Awake()
     {
@@ -24,7 +23,6 @@ public class BlockFactory : MonoBehaviour
         {
             case Blocks.Red:
                 blockGO = Instantiate(_blockPackSO._redBlock);
-                //blockGO.GetComponent<B>
                 break;
             case Blocks.Blue:
                 blockGO = Instantiate(_blockPackSO._blueBlock);

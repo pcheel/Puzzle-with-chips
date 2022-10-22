@@ -9,14 +9,14 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private MapSO _levelData;
     [SerializeField] private Transform _mapParent;
 
+    public Dictionary<Vector3, Block> map { get { return _map; } set { _map = value; } }
+    public List<Block> blocks => _blocks;
+
     private Dictionary<Vector3, Block> _map;
     private List<Block> _blocks;
     private List<WinCheckingRay> _winCheckingBlocks;
     private List<Blocks> _colorBlocks;
     private BlockFactory _blockFactory;
-
-    public Dictionary<Vector3, Block> map { get { return _map; } set { _map = value; } }
-    public List<Block> blocks => _blocks;
 
     private void Awake()
     {
@@ -67,7 +67,6 @@ public class MapCreator : MonoBehaviour
         int listSize = Convert.ToInt32(_levelData._mapSize.x * _levelData._mapSize.y) 
             - _levelData._stationaryBlocksPositions.Count 
             - _levelData._freeBlocksPositions.Count;
-        Debug.Log(listSize / 3);
         for (int i = 0; i < listSize / 3; i++)
         {
             blocks.Add(Blocks.Red);

@@ -10,11 +10,6 @@ public class WinChecker : MonoBehaviour
 
     private const int COLOR_CHECKING_COUNT = 3;
 
-    private void Awake()
-    {
-        _choiceHandler._OnBlocksSwap += CheckWin;
-    }
-
     public void CheckWin()
     {
         int counter = 0;
@@ -27,7 +22,10 @@ public class WinChecker : MonoBehaviour
             Win();
         }
     }
-
+    private void Awake()
+    {
+        _choiceHandler._OnBlocksSwap += CheckWin;
+    }
     private void Win()
     {
         _winPanel.SetActive(true);
