@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class PlayerInput : MonoBehaviour
 {
+    [SerializeField] private GameExit _gameExit;
+
     public bool canClick { set { _canClick = value; } }
 
     private Camera _camera;
@@ -31,6 +33,10 @@ public class PlayerInput : MonoBehaviour
                     }
                 }
             }
+        }
+        if (Input.GetAxis("Exit") == 1)
+        {
+            _gameExit.ExitGame();
         }
     }
 }
